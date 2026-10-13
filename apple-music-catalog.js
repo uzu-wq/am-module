@@ -1,13 +1,3 @@
-/*
- * Apple Music Catalog for 8SPINE
- * Version: 1.0.0
- *
- * Uses Apple's public iTunes Search/Lookup API for catalog metadata and
- * official preview audio URLs. Preview URLs are short samples, NOT full songs.
- *
- * Paste/import this module into 8SPINE's Module Manager as supported by your build.
- */
-
 const MODULE = {
   id: "apple-music-catalog",
   name: "Apple Music Catalog",
@@ -87,9 +77,6 @@ const MODULE = {
 
     return { tracks, total: Number(data.resultCount || tracks.length) };
   },
-
-  // Optional extension. The core contract may not expose album search in its UI,
-  // but this method can be used by a Module Manager that supports it.
   async searchAlbums(query, limit = this.defaultLimit) {
     const term = String(query || "").trim();
     if (!term) return { albums: [], total: 0 };
@@ -148,8 +135,6 @@ const MODULE = {
   },
 
   async getTrackStreamUrl(id, quality = "HIGH") {
-    // This module deliberately returns only the official preview audio URL
-    // supplied by the catalog. It does not extract or bypass protected streams.
     const rawId = String(id || "").trim();
     if (!/^\d+$/.test(rawId)) {
       throw new Error("Invalid track ID.");
